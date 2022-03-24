@@ -1,0 +1,23 @@
+{
+  "name": "helloworld",
+  "version": "1.0.0",
+  "description": "My neat Nuxt.js project",
+  "author": "fazt",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.9.3",
+    "bootstrap-vue": "^2.21.2",
+    "nuxt": "^2.0.0",
+    "vue-tailwind": "^2.5.0",
+    "vuelidate": "^0.7.6"
+  },
+  "devDependencies": {
+    "@types/vuelidate": "^0.7.15"
+  }
+}
