@@ -35,8 +35,8 @@ export default {
 }
 
 body {
-  background: #2d3436 !important;
-  color: #fff !important;
+  background: #8a95a5 !important;
+  color: #8a95a5 !important;
   font-family: Arial, Helvetica, sans-serif;
 }
 

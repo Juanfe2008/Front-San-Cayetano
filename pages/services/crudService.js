@@ -19,7 +19,7 @@ export default class CrudService {
      return axios.get(this.url)
   }
 
-  delet(id){
-    return axios.delete(this.url+"/"+id)
+  delete(id){
+    return axios.delete(this.url+"products/delete/"+id)
   }
 }

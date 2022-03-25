@@ -1,27 +1,30 @@
-<template>
-  <header class="header">
-    <div class="col-sm-6">
-      <h1 class="text-title">San Cayetano</h1>
-      <h5 class="text-subtitle">Salsamentaria</h5>
-    </div>
+<template style="background: #ffffff">
+  <div style="background: #ffffff !important;">
+    <b-navbar toggleable="lg" type="dark" style="background: #D90429 !important;">
+      <b-navbar-brand>San Cayetano</b-navbar-brand>
+      <nuxt-link class="nav-link" to="/home">Inicio</nuxt-link>
+      <b-collapse id="nav-collapse" is-nav>
 
-    <nav>
-      <ul>
-        <li>
-          <nuxt-link to="/home">Inicio</nuxt-link>
-        </li>
-        <li>
-          <nuxt-link to="/posts">Productos</nuxt-link>
-        </li>
-        <li>
-          <nuxt-link to="/prices">Registro</nuxt-link>
-        </li>
-        <li>
-          <nuxt-link to="/">Logout</nuxt-link>
-        </li>
-      </ul>
-    </nav>
-  </header>
+        <!-- Right aligned nav items -->
+        <b-navbar-nav class="ml-auto">
+          <b-navbar-nav>
+
+            <nuxt-link class="nav-link" to="/posts">Productos</nuxt-link>
+            <nuxt-link class="nav-link" to="/prices">Registro</nuxt-link>
+          </b-navbar-nav>
+
+          <b-nav-item-dropdown right>
+            <!-- Using 'button-content' slot -->
+            <template #button-content>
+              <em>User</em>
+            </template>
+            <b-dropdown-item href="#">Profile</b-dropdown-item>
+            <b-dropdown-item href="/">Sign Out</b-dropdown-item>
+          </b-nav-item-dropdown>
+        </b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
+  </div>
 </template>
 
 <script>
@@ -65,6 +68,11 @@ export default {
   margin-right: 0.5rem;
   text-decoration: none;
   text-transform: uppercase;
+}
+
+.nav-link {
+  font-size: larger;
+  accent-color: white;
 }
 
 .header a:hover {

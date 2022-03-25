@@ -80,17 +80,6 @@
                     Guardar
                   </button>
                 </div>
-                <div class="col-sm-12" style="padding: 5px 15px">
-                  <b-alert
-                    :show="dismissCountDown"
-                    dismissible
-                    :variant="variante"
-                    @dismissed="dismissCountDown = 0"
-                    @dismiss-count-down="countDownChanged"
-                  >
-                    {{ mensajeAlerta }}
-                  </b-alert>
-                </div>
               </b-row>
             </b-form-group>
           </form>
@@ -108,7 +97,7 @@
             <form ref="modal">
               <b-form-group invalid-feedback="Name is required">
                 <b-row class="mb-1">
-                  <b-col cols="12"
+                  <b-col style="text-align: initial" cols="12"
                   >Nombre del Producto
                     <b-form-input
                       id="nombre-input"
@@ -117,7 +106,7 @@
                       required
                     ></b-form-input>
                   </b-col>
-                  <b-col cols="12"
+                  <b-col style="text-align: initial" cols="12"
                   >Valor del Producto
                     <b-form-input
                       id="valor-input"
@@ -127,7 +116,7 @@
                       required
                     ></b-form-input>
                   </b-col>
-                  <b-col cols="12"
+                  <b-col style="text-align: initial" cols="12"
                   >Peso del Producto
                     <b-form-input
                       id="peso-input"
@@ -136,7 +125,7 @@
                       required
                     ></b-form-input>
                   </b-col>
-                  <b-col cols="12"
+                  <b-col style="text-align: initial" cols="12"
                   >Cantidad de ingreso
                     <b-form-input
                       id="cantidad-input"
@@ -146,7 +135,7 @@
                       required
                     ></b-form-input>
                   </b-col>
-                  <b-col cols="12"
+                  <b-col style="text-align: initial" cols="12"
                   >Unidad del Producto
                     <b-form-input
                       id="unidad-input"
@@ -155,7 +144,7 @@
                       required
                     ></b-form-input>
                   </b-col>
-                  <b-col cols="12"
+                  <b-col style="text-align: initial" cols="12"
                   >Proveedor del Producto
                     <b-form-input
                       id="proveedor-input"
@@ -181,6 +170,7 @@
           </b-container>
         </div>
         <b-button class="mt-3" variant="outline-success" block @click="updateModal">Actualizar</b-button>
+        <b-button class="mt-3" variant="outline-warning" block @click="deleteProduct">Eliminar</b-button>
         <b-button class="mt-3" variant="outline-danger" block @click="hideModal">Cerrar</b-button>
       </b-modal>
     </div>
@@ -215,9 +205,15 @@
         :current-page="currentPage"
         :select-mode="selectMode"
         small
-        selectable
-        @row-selected="OpdenDatail"
-      ></b-table>
+        striped
+        ref="selectableTable"
+      >
+        <template #cell(actions)="row">
+          <b-button size="sm" @click="OpenDetail(row.item, row.index, $event.target)" class="mr-1"  variant="outline-success">
+            Editar
+          </b-button>
+        </template>
+      </b-table>
       <b-pagination
         style="justify-content: center"
         v-model="currentPage"
@@ -225,6 +221,17 @@
         :per-page="perPage"
         aria-controls="my-table"
       ></b-pagination>
+    </div>
+    <div class="col-sm-12" style="padding: 5px 15px">
+      <b-alert
+        :show="dismissCountDown"
+        dismissible
+        :variant="variante"
+        @dismissed="dismissCountDown = 0"
+        @dismiss-count-down="countDownChanged"
+      >
+        {{ mensajeAlerta }}
+      </b-alert>
     </div>
   </div>
 </template>
@@ -305,12 +312,6 @@ export default {
           key: "weight",
           sortable: true,
         },
-
-        {
-          key: "quantity",
-          sortable: true,
-        },
-
         {
           key: "unit",
           sortable: true,
@@ -320,6 +321,7 @@ export default {
           key: "supplier",
           sortable: true,
         },
+        { key: 'actions', label: 'Actions' }
       ],
     };
   },
@@ -340,16 +342,16 @@ export default {
     countDownChanged(dismissCountDown) {
       this.dismissCountDown = dismissCountDown;
     },
-    OpdenDatail(items){
-      console.log(items)
+    OpenDetail(items, index){
+      console.log(items.id)
       this.$refs['my-modal'].show()
-      this.idUpdate = items[0].id;
-      this.nombreProductoUpdate = items[0].name;
-      this.cantidadIngresoUpdate = items[0].quantity;
-      this.proveedorProductoUpdate = items[0].supplier;
-      this.unidadProductoUpdate = items[0].unit;
-      this.valorProductoUpdate = items[0].value;
-      this.pesoProductoUpdate = items[0].weight;
+      this.idUpdate = items.id;
+      this.nombreProductoUpdate = items.name;
+      this.cantidadIngresoUpdate = items.quantity;
+      this.proveedorProductoUpdate = items.supplier;
+      this.unidadProductoUpdate = items.unit;
+      this.valorProductoUpdate = items.value;
+      this.pesoProductoUpdate = items.weight;
 
 
     },
@@ -364,7 +366,6 @@ export default {
         weight: this.pesoProductoUpdate,
       }
 
-      console.log(update)
       this.crudService.update(update).then((data) => {
         if (data.status === 201){
           this.nombreProductoUpdate = "";
@@ -374,18 +375,35 @@ export default {
           this.valorProductoUpdate = "";
           this.pesoProductoUpdate = "";
           this.$refs['my-modal'].hide()
+          this.variante = "success"
+          this.mensajeAlerta = data.data.message;
+          this.dismissCountDown = this.dismissSecs;
+          this.$refs.selectableTable.refresh()
+        }else{
+          this.variante = "danger"
+          this.mensajeAlerta = data.data.message;
+          this.dismissCountDown = this.dismissSecs;
         }
       })
     },
     hideModal() {
-      /*this.idUpdate = "",
-      this.nombreProductoUpdate = "";
-      this.cantidadIngresoUpdate = "";
-      this.proveedorProductoUpdate = "";
-      this.unidadProductoUpdate = "";
-      this.valorProductoUpdate = "";
-      this.pesoProductoUpdate = "";*/
       this.$refs['my-modal'].hide()
+
+    },
+    deleteProduct(){
+      console.log(this.idUpdate)
+      this.crudService.delete(this.idUpdate).then((data) => {
+        if (data.status === 200){
+          this.$refs['my-modal'].hide()
+          this.variante = "success"
+          this.mensajeAlerta = data.data.message;
+          this.dismissCountDown = this.dismissSecs;
+        }else{
+          this.variante = "danger"
+          this.mensajeAlerta = data.data.message;
+          this.dismissCountDown = this.dismissSecs;
+        }
+      })
     },
     save: function ($event) {
       const producto = {
@@ -408,7 +426,8 @@ export default {
           this.variante = "success"
           this.mensajeAlerta = data.data.message;
           this.dismissCountDown = this.dismissSecs;
-          this.$refs['modal'].hide()
+          this.$refs.selectableTable.refresh();
+          this.$refs['modal'].hide();
         }
         if(data.status === 400){
           this.variante = "danger"
@@ -439,7 +458,7 @@ export default {
 }
 
 .table-style {
-  background-color: aliceblue;
+  background-color: #EDF2F4;
   border-radius: 10px;
   border: none;
   padding: 10px;

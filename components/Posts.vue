@@ -21,7 +21,7 @@ export default {
 }
 
 .post:hover {
-  background: #2d3436;
+  background: #8a95a5;
   border: 1px solid #6c5ce7;
   cursor: pointer;
 }
@@ -30,6 +30,6 @@ a {
 }
 
 a:hover {
-  color: #6c5ce7;
+  color: #ffff;
 }
 </style>

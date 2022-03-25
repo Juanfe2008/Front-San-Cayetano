@@ -22,7 +22,7 @@
 
     <!-- Create Account -->
     <div id=formFooter>
-      <a class="underlineHover" href="/register">Create Account</a>
+      <a class="underlineHover" href="/register">Solicitar Cuenta</a>
     </div>
 
   </div>
