@@ -34,6 +34,9 @@ export default {
 </script>
 
 <style>
+html {
+  background: #ffffff;
+}
 .header {
   background: #2c3e50;
   color: #ffffff;

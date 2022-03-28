@@ -330,7 +330,6 @@ export default {
       return this.productos.length;
     },
     sortOptions() {
-      // Create an options list from our fields
       return this.fields
         .filter((f) => f.sortable)
         .map((f) => {

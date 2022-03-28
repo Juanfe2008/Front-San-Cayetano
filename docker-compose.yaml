@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  web:
+    container_name: 'front_san_cayetano'
+    build:
+      context: . /
+      dockerfile: ./Dockerfile
+    restart: always
+    ports:
+      - "8000:3000"
+    networks:
+      - san_cayetano_network
+networks:
+  san_cayetano_network:
+    external: true
+
