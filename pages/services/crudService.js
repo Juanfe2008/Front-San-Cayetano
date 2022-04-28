@@ -1,18 +1,18 @@
 import axios from 'axios';
 
 export default class CrudService {
-  url = "http://localhost:8080/api/";
+  url = "http://localhost:8080/api/products/";
 
    async getAll(){
-     return await axios.get(this.url+"products/list")
+     return await axios.get(this.url+"list")
   }
 
    save(productos) {
-    return  axios.post(this.url+"products/save", productos)
+    return  axios.post(this.url+"save", productos)
   }
 
   update(productos) {
-    return  axios.put(this.url+"products/update", productos)
+    return  axios.put(this.url+"update", productos)
   }
 
   listById(id){
@@ -20,6 +20,6 @@ export default class CrudService {
   }
 
   delete(id){
-    return axios.delete(this.url+"products/delete/"+id)
+    return axios.delete(this.url+"delete/"+id)
   }
 }

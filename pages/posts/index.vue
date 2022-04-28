@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1 style="color: #d90429; font-family: sans-serif">Registro de Productos</h1>
     <div class="model-style">
       <b-button v-b-modal.modal variant="primary">Nuevo Producto</b-button>
 

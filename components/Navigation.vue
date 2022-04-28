@@ -11,6 +11,7 @@
 
             <nuxt-link class="nav-link" to="/posts">Productos</nuxt-link>
             <nuxt-link class="nav-link" to="/prices">Registro</nuxt-link>
+            <nuxt-link class="nav-link" to="/credito">Creditos</nuxt-link>
           </b-navbar-nav>
 
           <b-nav-item-dropdown right>
