@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export default class UsersService {
-  url = "http://localhost:8080/api/users/"
+  url = "https://sancayetano.oa.r.appspot.com/api/users/"
 
   async getAll(){
     return await axios.get(this.url+"list")

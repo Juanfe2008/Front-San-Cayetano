@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export default class CrudService {
-  url = "http://localhost:8080/api/products/";
+  url = "https://sancayetano.oa.r.appspot.com/api/products/";
 
    async getAll(){
      return await axios.get(this.url+"list")
