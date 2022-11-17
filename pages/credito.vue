@@ -79,7 +79,8 @@ export default {
       /*Inpust para creditos*/
       valor:"",
       userCredito:"",
-
+      iduser:"",
+      valorDefinivo:"",
       /*Constantes para el update para creditos*/
       nombreUser:"",
       nombreUserState:null,
@@ -102,19 +103,49 @@ export default {
       console.log(event.name);
       this.userCredito = event.name +" "+ event.lastname;
       this.valor = event.totalValue;
+      this.iduser = event.id;
     },
     hideModal() {
       this.$refs['my-modal-creditos'].hide()
-
+      this.nombreUser = "";
+      this.valorProductoOperacion = "";
     },
     abonoCuenta() {
       this.$refs['my-modal-creditos'].hide()
+      console.log("Valor "+ this.valor);
+      console.log("id" + this.iduser);
+      this.valorDefinivo = this.valor - this.valorProductoOperacion;
 
+      const userUpdate = {
+        id: this.iduser,
+        totalValue: this.valorDefinivo
+      }
+
+      this.userService.update(userUpdate).then((data) => {
+        if (data.status === 201){
+          this.nombreUser = "";
+          this.valorProductoOperacion = "";
+          console.log("Actualizado")
+        }
+      })
     }
     ,
     CreditoCuenta() {
       this.$refs['my-modal-creditos'].hide()
+      this.valorDefinivo = this.valor + this.valorProductoOperacion;
 
+      const userUpdate = {
+        id: this.iduser,
+        totalValue: this.valorDefinivo
+      }
+
+      this.userService.update(userUpdate).then((data) => {
+        if (data.status === 201){
+          this.nombreUser = "";
+          this.valorProductoOperacion = "";
+          console.log("Actualizado")
+        }
+      })
     }
 
 
